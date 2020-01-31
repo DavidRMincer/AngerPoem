@@ -5,19 +5,21 @@ using UnityEngine.UI;
 
 public class Player_Script : Character_Script
 {
-    public float            rageSpeed,
-                            rageDuration,
-                            invulnerabilityDuration;
-    public GameObject[]     wings;
-    public ParticleSystem   flames;
-    public int              maxHealth;
-    public Text             healthCounter;
+    public float                rageSpeed,
+                                rageDuration,
+                                invulnerabilityDuration;
+    public GameObject[]         wings;
+    public ParticleSystem       flames;
+    public int                  maxHealth;
+    public Text                 healthCounter;
+    public GameManager_Script   gameManager;
 
-    internal bool           _raging = false;
+    internal bool               _raging = false,
+                                _hasRaged = false;
 
-    private int             _health;
-    private float           _rageCounter,
-                            _invulnerabilityCounter;
+    private int                 _health;
+    private float               _rageCounter,
+                                _invulnerabilityCounter;
 
     internal override void Awake()
     {
@@ -91,6 +93,11 @@ public class Player_Script : Character_Script
         {
             flames.Stop();
             _health = maxHealth;
+
+            if (_hasRaged)
+            {
+                StartCoroutine(gameManager.EndingRoutine());
+            }
         }
 
         _raging = rage;
@@ -115,6 +122,7 @@ public class Player_Script : Character_Script
             if (_health <= 0)
             {
                 SetRage(true);
+                _hasRaged = true;
             }
         }
     }

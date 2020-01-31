@@ -14,7 +14,6 @@ public class Character_Script : MonoBehaviour
     internal virtual void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
-        Debug.Log(gameObject + ": " + _rb);
         _currentSpeed = walkSpeed;
     }
 
@@ -25,7 +24,6 @@ public class Character_Script : MonoBehaviour
 
     public void SetRBType(RigidbodyType2D rbType)
     {
-        Debug.Log(_rb);
         _rb.bodyType = rbType;
     }
 }
